@@ -127,7 +127,7 @@ class InternalParquetRecordWriter<T> {
     if (recordCount >= recordCountForNextMemCheck) { // checking the memory size is relatively expensive, so let's not do it for every record.
       long memSize = columnStore.getBufferedSize();
       if (memSize > rowGroupSizeThreshold) {
-        LOG.info(format("mem size %,d > %,d: flushing %,d records to disk.", memSize, rowGroupSizeThreshold, recordCount));
+     //   LOG.info(format("mem size %,d > %,d: flushing %,d records to disk.", memSize, rowGroupSizeThreshold, recordCount));
         flushRowGroupToStore();
         initStore();
         recordCountForNextMemCheck = min(max(MINIMUM_RECORD_COUNT_FOR_CHECK, recordCount / 2), MAXIMUM_RECORD_COUNT_FOR_CHECK);
@@ -144,7 +144,7 @@ class InternalParquetRecordWriter<T> {
 
   private void flushRowGroupToStore()
       throws IOException {
-    LOG.info(format("Flushing mem columnStore to file. allocated memory: %,d", columnStore.getAllocatedSize()));
+    //LOG.info(format("Flushing mem columnStore to file. allocated memory: %,d", columnStore.getAllocatedSize()));
     if (columnStore.getAllocatedSize() > 3 * (long)rowGroupSizeThreshold) {
       LOG.warn("Too much memory used: " + columnStore.memUsageString());
     }
